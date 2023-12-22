@@ -1,0 +1,1 @@
+export {processAndPrintResult} from './input-processor'
