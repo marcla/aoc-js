@@ -15,15 +15,8 @@ const letterDigitMap = {
 
 const replaceLetterWithDigit = (line, map) => {
   const letters = Object.keys(map);
-  const replacementFn = (match) => `${match.at(0)}${map[match]}${match.at(-1)}`;
 
-  let result = line;
-
-  for (const letter of letters) {
-    result = result.replaceAll(new RegExp(letter, 'gi'), replacementFn);
-  }
-
-  return result;
+  return line.replaceAll(new RegExp(`(?=(${letters.join('|')}))`, 'gi'), (...args) => map[args[1]]);
 };
 
 const processing = (input) => {
