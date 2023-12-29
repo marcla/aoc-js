@@ -12,9 +12,10 @@ const letterDigitMap = {
   eight: 8,
   nine: 9,
 };
-const replaceLetterWithDigit = line => {
-  const letters = Object.keys(letterDigitMap);
-  const replacementFn = match => `${match.at(0)}${letterDigitMap[match]}${match.at(-1)}`;
+
+const replaceLetterWithDigit = (line, map) => {
+  const letters = Object.keys(map);
+  const replacementFn = (match) => `${match.at(0)}${map[match]}${match.at(-1)}`;
 
   let result = line;
 
@@ -25,12 +26,12 @@ const replaceLetterWithDigit = line => {
   return result;
 };
 
-const processing = input => {
+const processing = (input) => {
   const lines = splittingNewLine(input)
-    .map(replaceLetterWithDigit)
-    .map(line => line.replaceAll(/\D/gi, ''))
-    .map(line => [...line])
-    .map(line => `${line.at(0)}${line.at(-1)}`)
+    .map((line) => replaceLetterWithDigit(line, letterDigitMap))
+    .map((line) => line.replaceAll(/\D/gi, ''))
+    .map((line) => [...line])
+    .map((line) => `${line.at(0)}${line.at(-1)}`)
     .map(toInt);
 
   const result = lines.reduce((acc, curr) => acc + curr, 0);
